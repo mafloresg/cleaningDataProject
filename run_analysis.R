@@ -66,4 +66,4 @@ finalNames <- sapply(names(finalDataSet), paste0, "Avg", simplify = "array", USE
 finalNames[1] <- "subject"
 finalNames[2] <- "activityname"
 names(finalDataSet) <- finalNames
-write.table(finalDataSet,"finalDataSet.csv", row.name=FALSE)
+write.table(finalDataSet,"finalDataSet.txt", row.name=FALSE)
