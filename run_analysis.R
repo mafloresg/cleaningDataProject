@@ -31,10 +31,9 @@ completeDataSet <- rbind(testComplete, trainComplete)
 ## Extract only the measurements on the mean and standard deviation for each measurement
 ## Selected those with "mean" or "std" in the name indicated in the file "features.txt"
 
-columnsWeWant <- c(1,2,3,4,5,6,41,42,43,44,45,46,81,82,83,84,85,86,121,122,123,124,125,126,161,
-                   162,163,164,165,166,201,202,214,215,227,228,240,241,253,254,266,267,268,269,
-                   270,271,294,295,296,346,347,348,349,350,373,374,375,424,425,426,427,428,429,
-                   452,453,454,503,504,513,516,517,526,529,530,539,542,543,552,562,563)
+columnsWeWant <- c(1,2,3,4,5,6,41,42,43,44,45,46,81,82,83,84,85,86,121,122,123,124,125,126,161,162,163,
+                   164,165,166,201,202,214,215,227,228,240,241,253,254,266,267,268,269,270,271,345,346,
+                   347,348,349,350,424,425,426,427,428,429,503,504,516,517,529,530,542,543,562,563)
 limitedDataSet <- completeDataSet[columnsWeWant]
 
 
@@ -45,22 +44,26 @@ featuresNamesC <- as.character(featuresNames[,2])
 featuresNamesC[562] <- "activityid"
 featuresNamesC[563] <- "subject"
 names(limitedDataSet) <- featuresNamesC[columnsWeWant]
-names(limitedDataSet) <- sub("\\(\\)","",gsub("-","",names(limitedDataSet)))
-
+names(limitedDataSet) <- sub("BodyBody","Body",sub("\\(\\)","",gsub("-","",names(limitedDataSet))))
+names(limitedDataSet) <- sub("tBody","timeBody",names(limitedDataSet))
+names(limitedDataSet) <- sub("tGravity","timeGravity",names(limitedDataSet))
+names(limitedDataSet) <- sub("fBody","frequencyBody",names(limitedDataSet))
+names(limitedDataSet) <- sub("Acc","Accelerometer",names(limitedDataSet))
+names(limitedDataSet) <- sub("Gyro","Gyroscope",names(limitedDataSet))
 
 ## Uses descriptive activity names to name the activities in the data set
 
 labels <- read.delim("./UCI HAR Dataset/activity_labels.txt", sep="", header=FALSE)
 workingDataSet <- merge(limitedDataSet, labels, by.x="activityid", by.y="V1")
 labelsC <- names(workingDataSet)
-labelsC[81] <- "activityname"
+labelsC[69] <- "activityname"
 names(workingDataSet) <- labelsC
 
 
 # Creates a second, independent tidy data set with the average of each variable for each activity and each subject
 
 names <- names(limitedDataSet)
-names <- names[1:78]
+names <- names[1:66]
 finalDataSet <- aggregate(workingDataSet[names], by=workingDataSet[c("subject","activityname")], FUN=mean)
 finalNames <- sapply(names(finalDataSet), paste0, "Avg", simplify = "array", USE.NAMES = FALSE)
 finalNames[1] <- "subject"
