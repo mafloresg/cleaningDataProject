@@ -12,6 +12,7 @@ This repository contains the files:
 ### Execution of the script
 
 In order to execute the script you have to enter this in the R command line/RStudio:
+    
     source("run_analysis.R")
     
     
@@ -31,6 +32,7 @@ As described in the forum thread "David's Project FAQ" from David Hood:
 The dataset "finalDataSet.txt" contains the average (mean function) of each variable selected from the original data set, calculated by subject and the activity.
 
 There are six possible activities: 
+
     WALKING
     WALKING_UPSTAIRS
     WALKING_DOWNSTAIRS
@@ -50,11 +52,15 @@ For the next columns, each one represents the mean of a variable. From the origi
 This results on a set of 2+66 = 68 columns.
 
 The name of the calculated columns is <<nameOfTheOriginalMeasure>> leaving in camel case notation and doing this modifications:
+
     - Remove the "-" and the "()" characters
     - Replace the string "BodyBody" by "Body", assuming this was an error in the original names
     - Add a suffix "Avg"
+    - Change "t" prefix by "time"
+    - Change "f" prefix by "frequency"
+    - Change "Acc" particle by "Accelerometer"
+    - Change "Gyro" particle by "Gyroscope"
     
-This is easier to follow than giving new names, because the real meaning of each variable is complex anyway.
 For information about what the variables means, please refer to the CodeBook.md.
 All the variables are normalised in a (-1, 1) range, that means that they come with no units.
 
@@ -85,8 +91,10 @@ Once the original data is decompressed, inside the resulting directory "UCI HAR 
 
 The obtained dataset resulting from the experiments has been randomly partitioned into two sets, where 70% of the volunteers was selected for generating the training data and 30% the test data. 
 Consequently, you can find the subfolders:
+
     - "test"
     - "train"
+
 With the associated data within. The variables we want to process are inside the files "X_test.txt" and "X_train.txt".
 
 Each line of the files corresponds to a subject and an activity.
@@ -96,6 +104,7 @@ The activities are identified by a number and are listed in the files "y_test.tx
 For the purpose of this project, the data inside the folders named "Inertial Signals" is not needed. These are the original measurements, but we only want to work with the estimated variables calculated from the measurements.
 
 In the "UCI HAR Dataset" folder you can find:
-- The description of the original measurements and the estimated variables, listed in "features_info.txt".
-- The order of variables in the datasets, listed in "features.txt".
+
+    - The description of the original measurements and the estimated variables, listed in "features_info.txt".
+    - The order of variables in the datasets, listed in "features.txt".
 
